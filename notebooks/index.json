@@ -1,0 +1,15 @@
+[
+  {
+    "title": "Continuous Distributions",
+    "description": "Visualization of Probability Density Functions (PDFs) and Cumulative Distribution Functions (CDFs) for several common continuous distributions",
+    "tags": [
+      "chap-1",
+      "pdf",
+      "cdf"
+    ],
+    "date": "2025-05-07",
+    "last_modified": 1747865137.383815,
+    "filename": "notebook_continuous_distributions.py",
+    "html_path": "notebooks/notebook_continuous_distributions.html"
+  }
+]

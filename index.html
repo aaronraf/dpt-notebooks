@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marimo Notebook Collection</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html">Marimo Notebook Collection</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        
+<div x-data="{ activeTag: 'all' }">
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search notebooks..." 
+               oninput="filterNotebooks()" class="search-input">
+               
+        <div class="tag-filters">
+            <button x-on:click="activeTag = 'all'" 
+                    x-bind:class="{'active': activeTag === 'all'}" 
+                    class="tag-button">All</button>
+            
+            <button x-on:click="activeTag = 'cdf'"
+                    x-bind:class="{'active': activeTag === 'cdf'}"
+                    class="tag-button">cdf</button>
+            
+            <button x-on:click="activeTag = 'chap-1'"
+                    x-bind:class="{'active': activeTag === 'chap-1'}"
+                    class="tag-button">chap-1</button>
+            
+            <button x-on:click="activeTag = 'pdf'"
+                    x-bind:class="{'active': activeTag === 'pdf'}"
+                    class="tag-button">pdf</button>
+            
+        </div>
+    </div>
+
+    <div class="notebooks-grid">
+        
+        <div class="notebook-card" 
+             x-show="activeTag === 'all' || ["chap-1", "pdf", "cdf"].includes(activeTag)"
+             data-title="Continuous Distributions"
+             data-description="Visualization of Probability Density Functions (PDFs) and Cumulative Distribution Functions (CDFs) for several common continuous distributions"
+             data-tags="chap-1 pdf cdf">
+            <h2>Continuous Distributions</h2>
+            <p class="description">Visualization of Probability Density Functions (PDFs) and Cumulative Distribution Functions (CDFs) for several common continuous distributions</p>
+            <div class="notebook-tags">
+                
+                <span class="tag">chap-1</span>
+                
+                <span class="tag">pdf</span>
+                
+                <span class="tag">cdf</span>
+                
+            </div>
+            <div class="notebook-actions">
+                <a href="notebooks/notebook_continuous_distributions.html" class="view-button">Interactive View</a>
+                <a href="view_notebook_continuous_distributions.html" class="info-button">Details</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+function filterNotebooks() {
+    const searchTerm = document.getElementById('search').value.toLowerCase();
+    const cards = document.querySelectorAll('.notebook-card');
+    
+    cards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const description = card.dataset.description.toLowerCase();
+        const tags = card.dataset.tags.toLowerCase();
+        
+        if (title.includes(searchTerm) || 
+            description.includes(searchTerm) || 
+            tags.includes(searchTerm)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
+
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Marimo Notebook Collection - Automatically updated when new notebooks are added.</p>
+        </div>
+    </footer>
+    
+    <script src="static/js/main.js"></script>
+</body>
+</html>
