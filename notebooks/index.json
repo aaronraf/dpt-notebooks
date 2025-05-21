@@ -8,8 +8,10 @@
       "cdf"
     ],
     "date": "2025-05-07",
-    "last_modified": 1747865137.383815,
+    "last_modified": 1747866488.3080525,
     "filename": "notebook_continuous_distributions.py",
-    "html_path": "notebooks/notebook_continuous_distributions.html"
+    "html_path": "notebooks/notebook_continuous_distributions.html",
+    "static_html_path": "notebooks/notebook_continuous_distributions_static.html",
+    "notebook_path": "notebooks/notebook_continuous_distributions.py"
   }
 ]
