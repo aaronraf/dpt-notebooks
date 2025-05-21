@@ -12,21 +12,38 @@ def process_notebooks(notebooks_dir, output_dir):
     notebooks = []
     
     for file in Path(notebooks_dir).glob("*.py"):
-        # Generate HTML version
+        # Generate HTML version with WASM runtime for dependencies
         html_output = Path(output_dir) / f"{file.stem}.html"
         
-        # Run marimo to convert notebook to HTML
+        # Run marimo to convert notebook to HTML with WASM support
         subprocess.run([
             "marimo", "export", 
             "html", 
+            "--include-code",  # Include the source code
             str(file), 
             "-o", str(html_output)
         ])
+        
+        # Also create a static version without interactivity for faster loading
+        static_html_output = Path(output_dir) / f"{file.stem}_static.html"
+        subprocess.run([
+            "marimo", "export", 
+            "--format", "html",
+            "--no-sandbox",  # Export as static HTML without Python runtime
+            str(file), 
+            "-o", str(static_html_output)
+        ])
+        
+        # Copy the original notebook file for download
+        notebook_copy = Path(output_dir) / file.name
+        shutil.copy2(file, notebook_copy)
         
         # Extract metadata from notebook
         metadata = extract_metadata(file)
         metadata["filename"] = file.name
         metadata["html_path"] = f"notebooks/{file.stem}.html"
+        metadata["static_html_path"] = f"notebooks/{file.stem}_static.html"
+        metadata["notebook_path"] = f"notebooks/{file.name}"
         
         notebooks.append(metadata)
     
