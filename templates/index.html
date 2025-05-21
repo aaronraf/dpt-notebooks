@@ -35,8 +35,12 @@
                 {% endfor %}
             </div>
             <div class="notebook-actions">
-                <a href="{{ notebook.html_path }}" class="view-button">Interactive View</a>
+                <a href="{{ notebook.static_html_path }}" class="view-button">Quick View</a>
+                <a href="{{ notebook.html_path }}" class="interactive-button">Interactive (Beta)</a>
                 <a href="view_{{ notebook.filename|replace('.py', '.html') }}" class="info-button">Details</a>
+            </div>
+            <div class="notebook-notice">
+                <small>Interactive version may have limited functionality in browser. Download notebook for full experience.</small>
             </div>
         </div>
         {% endfor %}

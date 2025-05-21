@@ -177,11 +177,54 @@ footer {
     flex: 1;
 }
 
-.info-button {
+.interactive-button {
+    background-color: var(--secondary-color);
+    color: white;
+    flex: 1;
+}
+
+.notebook-notice {
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+    background-color: #fef3c7;
+    border-left: 3px solid #f59e0b;
+    border-radius: 0.25rem;
+}
+
+.notebook-notice small {
+    color: #92400e;
+    font-size: 0.75rem;
+}
+
+.usage-instructions {
     background-color: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    margin-top: 2rem;
+}
+
+.usage-instructions h3, .usage-instructions h4 {
+    margin-bottom: 0.75rem;
     color: var(--text-color);
-    border: 1px solid var(--border-color);
-    flex: 0.5;
+}
+
+.usage-instructions ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.usage-instructions li {
+    margin-bottom: 0.5rem;
+}
+
+.usage-instructions pre {
+    background-color: #1f2937;
+    color: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 0.875rem;
 }
 
 /* Notebook detail page */
