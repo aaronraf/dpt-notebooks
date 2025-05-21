@@ -18,7 +18,7 @@ def process_notebooks(notebooks_dir, output_dir):
         # Run marimo to convert notebook to HTML
         subprocess.run([
             "marimo", "export", 
-            "--format", "html", 
+            "html", 
             str(file), 
             "-o", str(html_output)
         ])
