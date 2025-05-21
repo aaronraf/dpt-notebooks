@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Marimo Notebook Collection{% endblock %}
+
+{% block content %}
+<div x-data="{ activeTag: 'all' }">
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search notebooks..." 
+               oninput="filterNotebooks()" class="search-input">
+               
+        <div class="tag-filters">
+            <button x-on:click="activeTag = 'all'" 
+                    x-bind:class="{'active': activeTag === 'all'}" 
+                    class="tag-button">All</button>
+            {% for tag in tags %}
+            <button x-on:click="activeTag = '{{ tag }}'"
+                    x-bind:class="{'active': activeTag === '{{ tag }}'}"
+                    class="tag-button">{{ tag }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="notebooks-grid">
+        {% for notebook in notebooks %}
+        <div class="notebook-card" 
+             x-show="activeTag === 'all' || {{ notebook.tags|tojson }}.includes(activeTag)"
+             data-title="{{ notebook.title }}"
+             data-description="{{ notebook.description }}"
+             data-tags="{{ notebook.tags|join(' ') }}">
+            <h2>{{ notebook.title }}</h2>
+            <p class="description">{{ notebook.description }}</p>
+            <div class="notebook-tags">
+                {% for tag in notebook.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            <div class="notebook-actions">
+                <a href="{{ notebook.html_path }}" class="view-button">Interactive View</a>
+                <a href="view_{{ notebook.filename|replace('.py', '.html') }}" class="info-button">Details</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function filterNotebooks() {
+    const searchTerm = document.getElementById('search').value.toLowerCase();
+    const cards = document.querySelectorAll('.notebook-card');
+    
+    cards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const description = card.dataset.description.toLowerCase();
+        const tags = card.dataset.tags.toLowerCase();
+        
+        if (title.includes(searchTerm) || 
+            description.includes(searchTerm) || 
+            tags.includes(searchTerm)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
+{% endblock %}

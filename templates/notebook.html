@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ notebook.title }} - Marimo Notebook{% endblock %}
+
+{% block content %}
+<div class="notebook-detail">
+    <h1>{{ notebook.title }}</h1>
+    
+    <div class="notebook-metadata">
+        {% if notebook.date %}
+        <div class="metadata-item">
+            <span class="metadata-label">Date:</span>
+            <span class="metadata-value">{{ notebook.date }}</span>
+        </div>
+        {% endif %}
+        
+        <div class="metadata-item">
+            <span class="metadata-label">Tags:</span>
+            <span class="metadata-value">
+                {% for tag in notebook.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    
+    <div class="notebook-description">
+        {{ notebook.description }}
+    </div>
+    
+    <div class="notebook-actions">
+        <a href="{{ notebook.html_path }}" class="primary-button">Open Interactive Notebook</a>
+        <a href="notebooks/{{ notebook.filename }}" class="secondary-button">Download Source</a>
+    </div>
+    
+    <h2>Related Notebooks</h2>
+    <div class="related-notebooks">
+        {% set related_count = 0 %}
+        {% for nb in notebooks %}
+            {% if nb.filename != notebook.filename and (set(nb.tags) & set(notebook.tags)) %}
+                {% if related_count < 3 %}
+                <div class="related-notebook">
+                    <h3>{{ nb.title }}</h3>
+                    <p>{{ nb.description[:100] }}{% if nb.description|length > 100 %}...{% endif %}</p>
+                    <a href="view_{{ nb.filename|replace('.py', '.html') }}">View Details</a>
+                </div>
+                {% set related_count = related_count + 1 %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
